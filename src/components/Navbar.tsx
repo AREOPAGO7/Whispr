@@ -27,7 +27,7 @@ export default function Navbar() {
           Whispr <span className='text-[10px] pt-2 pl-1 text-primary font-bold'> 1.0.v</span>
         </span>
       </div>
-      <ul className="flex space-x-16 mr-8 ml-16 ">
+      <ul className="flex space-x-16  ml-16 ">
         <li>
           <a href="#" className={`text-gray-800 text-[18px] font-bold hover:text-primary transition-colors ${poppins.className}`}>
             Home
@@ -50,7 +50,7 @@ export default function Navbar() {
       <BoxIcon name='sun' />
       </div>
         <button 
-          className="bg-primary text-white font-bold px-4 py-2 rounded-md hover:bg-primary transition-colors mr-3 w-[100px]"
+          className="bg-primary text-white shadow-lg font-bold px-4 py-2 rounded-md hover:bg-primary transition-colors mr-3 w-[100px]"
           onClick={() => setAuthOpen(true)}
         >
           <span className={poppins.className}>{isSignUp ? 'Sign Up' : 'Sign In'}</span>

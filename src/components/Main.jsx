@@ -45,7 +45,7 @@ const Main = () => {
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-black md:text-6xl">
             Find Your Dream Job Today!
           </h1>
-          <p className="mb-12 text-xl text-gray-600 md:text-2xl ">
+          <p className="mb-12 text-xl font-bold text-black/70 md:text-xl ">
             Explore thousands of job listings tailored for you.
           </p>
 
@@ -54,7 +54,7 @@ const Main = () => {
               <input
                 type="text"
                 className="w-full px-6 py-4 text-lg bg-white border border-gray-200 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="What job are you looking for?"
+                placeholder="What job are you looking for ?"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -80,7 +80,7 @@ const Main = () => {
 
           <div className="mt-12">
             <p className={`text-gray-600 ${poppins.className}`}>
-              Join thousands of professionals who've found their dream careers through our platform
+              Finding job made eazy with Whisper , Join thousands of professionals who've found their dream careers. 
             </p>
           </div>
         </div>
