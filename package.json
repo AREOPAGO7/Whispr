@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "boxicons": "^2.1.4",
+    "dotenv": "^16.4.7",
+    "firebase": "^11.1.0",
     "gsap": "^3.12.5",
     "next": "^15.1.3",
     "react": "^19.0.0",

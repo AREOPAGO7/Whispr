@@ -3,7 +3,6 @@ import { Poppins } from 'next/font/google';
 import { useState } from 'react';
 import AuthPopup from './AuthPopup';
 import BoxIcon from './BoxIcon';
-import 'boxicons'
 import 'boxicons/css/boxicons.min.css'
 
 
@@ -46,7 +45,7 @@ export default function Navbar() {
         
       </ul>
       <div className="flex items-center">
-      <div className='mr-4 bg-black/5 w-[40px] h-[40px] p-[6px] rounded-full shadow-sm'>
+      <div className='mr-4  w-[40px] h-[40px] p-[6px] l '>
       <BoxIcon name='sun' />
       </div>
         <button 
