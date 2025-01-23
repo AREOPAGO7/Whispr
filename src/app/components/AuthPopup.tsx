@@ -24,13 +24,31 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ onClose, isSignUp, toggleAuth }) 
   const [profilePicture, setProfilePicture] = useState<string | null>('url'); // Store file name
   const [error, setError] = useState<string | null>(null);
 
+  // This function sets a session cookie by sending a POST request to the '/api/auth/session' endpoint with the provided JWT token.
+  // If the request is successful, the session cookie will be created on the server.
+  // If an error occurs during the fetch operation, it logs the error to the console and updates the error state to inform the user.
+  const setSessionCookie = async (token: string) => {
+    try {
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
+    } catch (error) {
+      console.error('Failed to set session:', error);
+      setError("Failed to create session. Please try again.");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
     try {
       let userId;
-      let profilePictureUrl = "";  // Initialize as an empty string if no profile picture
+      let profilePictureUrl = "";
 
       if (isSignUp) {
         if (password !== confirmPassword) {
@@ -41,12 +59,20 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ onClose, isSignUp, toggleAuth }) 
         // Create a new user with email and password
         const userCredential = await signUpWithEmail(email, password, firstName, lastName, profilePicture);
         userId = userCredential.user.uid;
+        
+        // Get the JWT token and set cookie
+        const token = await userCredential.user.getIdToken();
+        await setSessionCookie(token);
 
         // Store the profile picture URL as text (file name or a default URL)
         profilePictureUrl = profilePicture || "defaultProfilePictureUrl"; // If no profile picture selected, use default URL or name
       } else {
-        await signInWithEmail(email, password);
-        userId = (await signInWithEmail(email, password)).user.uid;
+        const userCredential = await signInWithEmail(email, password);
+        userId = userCredential.user.uid;
+        
+        // Get the JWT token and set cookie
+        const token = await userCredential.user.getIdToken();
+        await setSessionCookie(token);
       }
 
       // Save user information to Firestore (including profile picture name as text)
@@ -58,7 +84,6 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ onClose, isSignUp, toggleAuth }) 
       };
       await setDoc(doc(db, "users", userId), userDoc);
 
-     
       router.push("/explore");
       onClose();
     } catch (error) {
@@ -92,8 +117,12 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ onClose, isSignUp, toggleAuth }) 
   const handleGoogleSignIn = async () => {
     setError(null);
     try {
-      await signInWithGoogle();
+      const userCredential = await signInWithGoogle();
       
+      // Get the JWT token and set cookie
+      const token = await userCredential.user.getIdToken();
+      await setSessionCookie(token);
+
       router.push("/explore");
       onClose();
     } catch (error) {
