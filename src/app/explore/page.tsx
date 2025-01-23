@@ -19,7 +19,7 @@ export default async function ExplorePage() {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 text-black">
       <h1 className="text-2xl font-bold mb-4">Explore Page</h1>
       {userEmail && (
         <div className="mt-4">
