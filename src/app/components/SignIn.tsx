@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { signInWithEmail, signInWithGoogle } from "../../firebase/firebaseAuth";
+import { createUser } from '../../services/userService'
+import { getUserById } from '../../services/userService'
 import { FirebaseError } from "firebase/app";
 import { useRouter } from "next/navigation";
 import { setSessionCookie } from "../../lib/setSessionCookie";
@@ -50,12 +52,32 @@ const SignIn: React.FC<SignInProps> = ({ onClose, toggleAuth }) => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (): Promise<void> => {
     setError(null);
     try {
       const userCredential = await signInWithGoogle();
       const token = await userCredential.user.getIdToken();
-      const userId = userCredential.user.uid; // Accessing the user ID created by Google Auth
+      const userId: string = userCredential.user.uid; // Accessing the user ID created by Google Auth
+      const email: string | null = userCredential.user.email; // Get the email from the user credential
+      const userName: string = email ? email.split('@')[0] : 'User'; // Create a username from the email or default to 'User'
+      
+      // Add logging for debugging
+      console.log("Fetching user with ID:", userId);
+      
+    //   const isUser = await getUserById(userId);
+    //   if (isUser === null) {
+        // Handle case where user is not found
+        const userData: { uid: string; name: string; email: string; profilePicture: string } = {
+          uid: userId,
+          name: userName,
+          email: email || '', // Ensure email is a string
+          profilePicture: '',
+        };
+        await createUser(userData); // Create the user in MongoDB
+    //   } else {
+    //     console.log(`User with ID ${userId} found in MongoDB.`);
+    //   }
+      
       await setSessionCookie(token, setError);
 
       console.log("User ID:", userId); // Optional: Log the user ID for debugging
@@ -63,6 +85,7 @@ const SignIn: React.FC<SignInProps> = ({ onClose, toggleAuth }) => {
       router.push("/explore");
       onClose();
     } catch (error) {
+      console.error("Error during Google sign-in:", error); // Log the error details
       if (error instanceof FirebaseError) {
         setError("An error occurred during Google sign-in.");
       } else {

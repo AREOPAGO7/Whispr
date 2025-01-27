@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { signUpWithEmail, signInWithGoogle } from "../../firebase/firebaseAuth";
 import { FirebaseError } from "firebase/app";
+import { createUser } from '../../services/userService'
 import { useRouter } from "next/navigation";
 import { setSessionCookie } from "../../lib/setSessionCookie";
 import eye from "../../../public/eye.svg";
@@ -34,6 +35,15 @@ const SignUp: React.FC<SignUpProps> = ({ onClose, toggleAuth }) => {
 
     try {
       const userCredential = await signUpWithEmail(email, password);
+      
+      const userId = userCredential.user.uid;
+      const userData = {
+        uid: userId,
+        name: `${firstName} ${lastName}`,
+        email: email,
+        profilePicture: '',
+      }
+      await createUser(userData)
       const token = await userCredential.user.getIdToken();
       await setSessionCookie(token, setError);
 
@@ -61,10 +71,22 @@ const SignUp: React.FC<SignUpProps> = ({ onClose, toggleAuth }) => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (): Promise<void> => {
     setError(null);
     try {
       const userCredential = await signInWithGoogle();
+      const userId: string = userCredential.user.uid;
+      const email: string | null = userCredential.user.email; // Password is not available from Google sign-in, set to empty or handle accordingly
+      const userName: string = email ? email.split('@')[0] : 'User'; // Create a username from the email or default to 'User'
+
+      const userData = {
+        uid: userId,
+        name: userName,
+        email: email || '', // Ensure email is a string
+        profilePicture: '',
+      };
+      await createUser(userData); // Assuming createUser is available in the scope
+
       const token = await userCredential.user.getIdToken();
       await setSessionCookie(token, setError);
 
