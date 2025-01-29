@@ -5,6 +5,8 @@ import SignUp from "./SignUp";
 
 interface AuthPopupProps {
   onClose: () => void;
+  toggleAuth: () => void;
+  isSignUp: boolean;
 }
 
 const AuthPopup: React.FC<AuthPopupProps> = ({ onClose }) => {
@@ -13,8 +15,7 @@ const AuthPopup: React.FC<AuthPopupProps> = ({ onClose }) => {
   const toggleAuth = () => {
     setIsSignUp(!isSignUp);
   };
-
-  return (
+  return ( 
     <>
       {isSignUp ? (
         <SignUp onClose={onClose} toggleAuth={toggleAuth} />

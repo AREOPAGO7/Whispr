@@ -26,7 +26,7 @@ interface DecodedToken {
         console.error('Token verification failed:', errorText);
         throw new Error(`Token verification failed: ${response.statusText}`);
       }
-  
+     
       const data = await response.json();
   
       if (!data.users || !data.users[0]) {

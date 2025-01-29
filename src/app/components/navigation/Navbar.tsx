@@ -1,8 +1,8 @@
 "use client";
 import { Poppins } from 'next/font/google';
 import { useState } from 'react';
-import AuthPopup from './AuthPopup';
-import BoxIcon from './BoxIcon';
+import AuthPopup from '../auth/AuthPopup';
+import BoxIcon from '../fonts/BoxIcon';
 import 'boxicons/css/boxicons.min.css'
 
 
@@ -17,6 +17,7 @@ export default function Navbar() {
 
   const toggleAuth = () => {
     setIsSignUp(!isSignUp);
+    
   };
 
   return (

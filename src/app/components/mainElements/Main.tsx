@@ -24,6 +24,7 @@ const Main = () => {
         {/* <div 
           className="absolute inset-0 z-0 h-full"
           style={{
+          fffffffffffff
             backgroundImage: "url('/bg.png')",
             backgroundPosition: "center",
             backgroundSize: "cover",

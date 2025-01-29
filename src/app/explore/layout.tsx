@@ -1,24 +1,11 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { verifyToken } from '@/lib/jwt-verify';
+import withAuth from '../components/auth/withAuth/withAuth';
 
-export default async function ExploreLayout({
-  children,
-}: {
+interface ExploreLayoutProps {
   children: React.ReactNode;
-}) {
-  const cookieStore = cookies();
-  const session = (await cookieStore).get('session');
+}
 
-  if (!session?.value) {
-    redirect('/');
-  }
-
-  try {
-    await verifyToken(session.value);
-  } catch (error) {
-    redirect('/');
-  }
-
+const ExploreLayout: React.FC<ExploreLayoutProps> = ({ children }) => {
   return <>{children}</>;
-} 
+};
+
+export default withAuth(ExploreLayout);

@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { signUpWithEmail, signInWithGoogle } from "../../firebase/firebaseAuth";
+import { signUpWithEmail, signInWithGoogle } from "../../../firebase/firebaseAuth";
 import { FirebaseError } from "firebase/app";
-import { createUser } from '../../services/userService'
+import { createUser } from '../../../services/userService'
 import { useRouter } from "next/navigation";
-import { setSessionCookie } from "../../lib/setSessionCookie";
-import eye from "../../../public/eye.svg";
-import eyeSlash from "../../../public/eye-slash.svg";
+import { setSessionCookie } from "../../../lib/setSessionCookie";
+import eye from "../../../../public/eye.svg";
+import eyeSlash from "../../../../public/eye-slash.svg";
 import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({
@@ -144,17 +144,8 @@ const SignUp: React.FC<SignUpProps> = ({ onClose, toggleAuth }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button
-              type="button"
-              className={`absolute right-10 top-[54px] mr-3 transform -translate-y-1/2 bg-primary rounded-md px-3 py-1 text-[13px] ${poppins.className}`}
-              onClick={() => {
-                setShowPassword(true);
-                const randomPassword = Math.random().toString(36).slice(-8);
-                setPassword(randomPassword);
-              }}
-            >
-              Generate
-            </button>
+            
+           
             <button
               type="button"
               className="absolute right-2 top-[54px] mr-2  transform -translate-y-1/2"

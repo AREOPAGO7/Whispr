@@ -12,10 +12,8 @@ export async function POST(request: Request) {
 
     console.log('Setting session cookie with token');
     
-    // Ensure cookies are awaited
     const cookieStore = await cookies();
 
-    // Set HTTP-only cookie that can't be accessed by JavaScript
     cookieStore.set('session', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
