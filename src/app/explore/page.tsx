@@ -11,7 +11,7 @@ export default async function ExplorePage() {
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
           <p className="font-bold">Error loading user data</p>
           <p className="text-sm">
-            No session cookie found - please log in again.
+            No session cookie found - please log in .
           </p>
         </div>
       </div>
