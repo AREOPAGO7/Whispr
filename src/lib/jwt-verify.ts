@@ -35,7 +35,7 @@ interface DecodedToken {
   
       const user = data.users[0];
       return {
-        exp: Math.floor(Date.now() / 1000) + 3600, // 1 hour from now
+        exp: Math.floor(Date.now() / 1000) + (24 * 3600), // 1 hour from now
         user_id: user.localId,
         email: user.email
       };

@@ -1,18 +1,34 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
   async headers() {
     return [
       {
         source: '/(.*)',
         headers: [
-          { key: 'Cross-Origin-Opener-Policy', value: 'unsafe-none' },
-          { key: 'Cross-Origin-Embedder-Policy', value: 'unsafe-none' },
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'unsafe-none',
+          },
+          {
+            key: 'Cross-Origin-Embedder-Policy',
+            value: 'unsafe-none',
+          },
         ],
       },
     ];
   },
-  /* other config options here */
 };
 
-export default nextConfig;
+module.exports = nextConfig;

@@ -5,9 +5,12 @@ import {
   signInWithEmailAndPassword, 
   GoogleAuthProvider, 
   signInWithPopup, 
-  sendPasswordResetEmail 
+  sendPasswordResetEmail ,
+  signOut
 } from "firebase/auth";
-import { firebaseApp } from "./firebaseConfig"; // Import the initialized Firebase app
+import { firebaseApp } from "./firebaseConfig"; 
+import { redirect } from "next/navigation";
+// Import the initialized Firebase app
 import { toast } from 'react-hot-toast';
 
 const auth = getAuth(firebaseApp);
@@ -48,10 +51,10 @@ export const signInWithEmail = async (email: string, password: string) => {
   } catch (error: unknown) {
     if (error instanceof FirebaseError) {
       const message = getFriendlyErrorMessage(error.code);
-      toast.error(`Sign in failed: ${message}`);
+      // toast.error(`Sign in failed: ${message}`);
       throw new FirebaseError(error.code, error.message);
     } else {
-      toast.error('An unknown error occurred during sign in.');
+      // toast.error('An unknown error occurred during sign in.');
       throw new Error("An unknown error occurred during sign in.");
     }
   }
@@ -86,5 +89,26 @@ export const handlePasswordReset = async (email: string) => {
     } else {
       toast.error('An unknown error occurred during password reset.');
     }
+  }
+};
+
+
+export const logout = async () => {
+  try {
+    await signOut(auth);
+
+    // Call the API to clear the session cookie
+    const response = await fetch('/api/logout', {
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      console.error('Failed to clear session cookie');
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error during logout:', error);
+    throw error;
   }
 };
