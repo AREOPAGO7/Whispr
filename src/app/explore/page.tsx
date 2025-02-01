@@ -105,7 +105,7 @@ const ExploreComponent = () => {
   ];
 
   return (
-    <div className='min-h-screen text-white bg-black'>
+    <div className='min-h-screen text-white bg-[#1e1e24]'> {/* Added bg-[#2E282A] */}
 
       <div className="container mx-auto px-4 py-8 flex">
         {/* Left Sidebar */}
@@ -116,8 +116,8 @@ const ExploreComponent = () => {
           </h1>
           
           {/* Profile section */}
-          <div className="mb-8 mt-20">
-            <div className="flex items-center space-x-4 mb-6">
+          <div className="m mt-16 hover:bg-white/10 p-2 transition-colors duration-300 hover:bg-gray-100 rounded-lg">
+            <div className="flex items-center space-x-4 ">
               <Image
                 src="https://github.com/shadcn.png"
                 alt="Profile"
@@ -137,25 +137,25 @@ const ExploreComponent = () => {
           {/* Navigation section with flex and justify-between */}
           <div className="flex flex-col h-[calc(100vh-240px)] justify-between">
             {/* Main navigation */}
-            <nav className="space-y-5 mt-6">
+            <nav className="space-y-4 mt-6 text-[14px]">
             <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-            <AiFillHome className="w-6 h-6" />
+            <AiFillHome className="w-5 h-5" />
                 <span>Home</span>
               </button>
               <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-                <FiCompass className="w-6 h-6" />
+                <FiCompass className="w-5 h-5" />
                 <span>Explore</span>
               </button>
               <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-                <FiBell className="w-6 h-6" />
+                <FiBell className="w-5 h-5" />
                 <span>Notifications</span>
               </button>
               <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-                <FiMessageSquare className="w-6 h-6" />
+                <FiMessageSquare className="w-5 h-5" />
                 <span>Messages</span>
               </button>
               <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-                <FiPlusSquare className="w-6 h-6" />
+                <FiPlusSquare className="w-5 h-5" />
                 <span>Create </span>
               </button>
             </nav>
@@ -165,7 +165,7 @@ const ExploreComponent = () => {
               onClick={handleLogout} 
               className={`group flex items-center space-x-4 w-full p-3 text-red-500 hover:bg-white/10 transition-all duration-300 rounded-lg ${poppins.className}`}
             >
-              <BiLogOut className="w-6 h-6 transition-transform group-hover:rotate-12" />
+              <BiLogOut className="w-5 h-5 transition-transform group-hover:rotate-12" />
               <span>Log out</span>
             </button>
           </div>
@@ -174,14 +174,14 @@ const ExploreComponent = () => {
         {/* Main Content */}
         <div className="md:ml-64 flex-grow md:mr-80">
           <div className="md:ml-64 flex-grow md:mr-80">
-            <div className="fixed top-0 left-0 right-0 z-10 w-[100%] lg:w-[40%] mx-auto h-18 bg-black p-4 flex items-center justify-between  border-white/10">
+            <div className="fixed top-0 left-0 right-0 z-10 w-[100%] lg:w-[40%] mx-auto h-18 p-4 flex items-center justify-between  border-white/10">
               <div className="relative w-[100%] xl:ml-2 ">
                 <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                   <FaSearch className="w-5 h-5 text-gray-200" />
                 </div>
                 <input
-                  className={`text-white  xl:w-[90%] w-[110%]  ${poppins.className} p-3 pl-12 bg-black border-[1px] border-white/20 rounded-lg focus:outline-none outline-none focus:border-primary/50 transition-all duration-300 ease-in-out focus:pl-14 focus:pr-6 `}
-                  placeholder="Search"
+                  className={`text-white  xl:w-[90%] w-[110%]  ${poppins.className} p-3 pl-12 bg-[#1e1e24] border-[1px] border-white/10 rounded-lg focus:outline-none outline-none focus:border-primary/50 transition-all duration-300 ease-in-out focus:pl-14 focus:pr-6 `}
+                  placeholder="Search Whispr"
                   type="text"
                 />
               </div>
