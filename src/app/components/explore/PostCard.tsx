@@ -18,7 +18,7 @@ interface Post {
 
 const PostCard: React.FC<{ post: Post }> = ({ post }) => {
   return (
-    <div className=" xl:w-[60%] xl:mx-auto  md:w-[80%] rounded-xl shadow-sm overflow-hidden border-[1px] border-white/5">
+    <div className=" mx-auto lg:max-w-[70%] md:max-w-[90%]  max-w-[100%] rounded-xl shadow-sm overflow-hidden border-[1px] border-white/5">
       <div className="p-4 flex items-center space-x-3">
         <Image
           src={post.user.avatar}

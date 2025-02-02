@@ -1,15 +1,20 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { logout } from "@/firebase/firebaseAuth";
 import { useRouter } from 'next/navigation'; // Changed from 'next/router'
 import { FiCompass, FiBell, FiMessageSquare, FiPlusSquare, FiHeart, FiMessageCircle, FiShare2, FiBookmark } from "react-icons/fi";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
+import { CgDetailsMore } from "react-icons/cg";
+import { IoMdSettings } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
 import PostCard from "@/app/components/explore/PostCard";
 import { Poppins } from 'next/font/google';
 import { unsetSessionCookies } from "@/lib/unsetSessionCookies";
+import LeftSidebarSkeleton from '../components/skeletons/LeftSidebarSkeleton';
+import MainContentSkeleton from '../components/skeletons/MainContentSkeleton';
+import RightSidebarSkeleton from '../components/skeletons/RightSidebarSkeleton';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -18,6 +23,31 @@ const poppins = Poppins({
 
 const ExploreComponent = () => {
   const router = useRouter();
+  const [showMoreOptions, setShowMoreOptions] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowMoreOptions(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -31,9 +61,9 @@ const ExploreComponent = () => {
     {
       id: 1,
       user: {
-        name: "John Doe",
+        name: "Kanye West",
         avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde",
-        username: "johndoe"
+        username: "kanye1223"
       },
       image: "https://images.unsplash.com/photo-1616763355603-9755a640a287",
       likes: 1234,
@@ -104,100 +134,131 @@ const ExploreComponent = () => {
     "#art"
   ];
 
+          
+        
+  
+
   return (
     <div className='min-h-screen text-white bg-[#1e1e24]'> {/* Added bg-[#2E282A] */}
 
       <div className="container mx-auto px-4 py-8 flex">
         {/* Left Sidebar */}
 
-        <div className="hidden md:block w-64 fixed left-0 top-0 h-screen p-6 border-r border-white/10">
-          <h1 className={`pt-6 text-[26px] ${poppins.className} fixed left-7 top-0`}>
-            Whispr <span className="text-[10px] text-primary">1.0v</span>
-          </h1>
-          
-          {/* Profile section */}
-          <div className="m mt-16 hover:bg-white/10 p-2 transition-colors duration-300 hover:bg-gray-100 rounded-lg">
-            <div className="flex items-center space-x-4 ">
-              <Image
-                src="https://github.com/shadcn.png"
-                alt="Profile"
-                width={48}
-                height={48}
-                className="rounded-full object-cover"
-                priority
-              />
-              <div>
-                <h3 className="font-semibold">Chief keef</h3>
-                <p className="text-sm text-gray-500">@areopago</p>
-              </div>
-            </div>
-           
-          </div>
-
-          {/* Navigation section with flex and justify-between */}
-          <div className="flex flex-col h-[calc(100vh-240px)] justify-between">
-            {/* Main navigation */}
-            <nav className="space-y-4 mt-6 text-[14px]">
-            <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-            <AiFillHome className="w-5 h-5" />
-                <span>Home</span>
-              </button>
-              <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-                <FiCompass className="w-5 h-5" />
-                <span>Explore</span>
-              </button>
-              <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-                <FiBell className="w-5 h-5" />
-                <span>Notifications</span>
-              </button>
-              <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-                <FiMessageSquare className="w-5 h-5" />
-                <span>Messages</span>
-              </button>
-              <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 hover:text-primary transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
-                <FiPlusSquare className="w-5 h-5" />
-                <span>Create </span>
-              </button>
-            </nav>
-
-            {/* Logout button */}
-            <button 
-              onClick={handleLogout} 
-              className={`group flex items-center space-x-4 w-full p-3 text-red-500 hover:bg-white/10 transition-all duration-300 rounded-lg ${poppins.className}`}
-            >
-              <BiLogOut className="w-5 h-5 transition-transform group-hover:rotate-12" />
-              <span>Log out</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="md:ml-64 flex-grow md:mr-80">
-          <div className="md:ml-64 flex-grow md:mr-80">
-            <div className="fixed top-0 left-0 right-0 z-10 w-[100%] lg:w-[40%] mx-auto h-18 p-4 flex items-center justify-between  border-white/10">
-              <div className="relative w-[100%] xl:ml-2 ">
-                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                  <FaSearch className="w-5 h-5 text-gray-200" />
+        {/* {loading ? <LeftSidebarSkeleton /> : ( */}
+          <>
+            <div className="hidden md:block lg:w-80 w-64 fixed left-0 top-0 h-screen p-6 border-r border-white/10">
+              {/* Profile section */}
+              <div className="m mt-16 hover:bg-white/10 p-2 transition-colors duration-300 hover:bg-gray-100 rounded-lg">
+                <div className="flex items-center space-x-4 ">
+                  <Image
+                    src="https://github.com/shadcn.png"
+                    alt="Profile"
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover"
+                    priority
+                  />
+                  <div>
+                    <h3 className="font-semibold">Chief keef</h3>
+                    <p className="text-sm text-gray-500">@areopago</p>
+                  </div>
                 </div>
-                <input
-                  className={`text-white  xl:w-[90%] w-[110%]  ${poppins.className} p-3 pl-12 bg-[#1e1e24] border-[1px] border-white/10 rounded-lg focus:outline-none outline-none focus:border-primary/50 transition-all duration-300 ease-in-out focus:pl-14 focus:pr-6 `}
-                  placeholder="Search Whispr"
-                  type="text"
-                />
+              </div>
+
+              {/* Navigation section with flex and justify-between */}
+              <div className="flex flex-col h-[calc(100vh-180px)] justify-between">
+                {/* Main navigation */}
+                <nav className="space-y-4 mt-6 text-[14px]">
+                  <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10  transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
+                    <AiFillHome className="w-5 h-5" />
+                    <span>Home</span>
+                  </button>
+                  <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10  transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
+                    <FiCompass className="w-5 h-5" />
+                    <span>Explore</span>
+                  </button>
+                  <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10  transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
+                    <FiBell className="w-5 h-5" />
+                    <span>Notifications</span>
+                  </button>
+                  <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10 transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
+                    <FiMessageSquare className="w-5 h-5" />
+                    <span>Messages</span>
+                  </button>
+                  <button className={`flex items-center space-x-4 w-full p-3 hover:bg-white/10  transition-colors duration-300 hover:bg-gray-100 rounded-lg ${poppins.className}`}>
+                    <FiPlusSquare className="w-5 h-5" />
+                    <span>Create </span>
+                  </button>
+                </nav>
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setShowMoreOptions(!showMoreOptions)}
+                    className={`group flex items-center space-x-4 w-full p-3 hover:bg-white/10 transition-all duration-300 rounded-lg ${poppins.className}`}
+                  >
+                    <CgDetailsMore className="w-5 h-5" />
+                    <span>More </span>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {showMoreOptions && (
+                    <div className="absolute bottom-full left-0 w-full mb-2 bg-[#1e1e24] border border-white/5 rounded-lg shadow-lg overflow-hidden">
+
+                      <button
+                        onClick={() => router.push('/settings')}
+                        className={`flex items-center space-x-4 w-full p-3  hover:bg-white/10 transition-all duration-300 ${poppins.className}`}
+                      >
+                        <IoMdSettings className="w-5 h-5 transition-transform group-hover:rotate-12" />
+                        <span>Settings</span>
+                      </button>
+                      <button
+                        onClick={() => router.push('/saved')}
+                        className={`flex items-center space-x-4 w-full p-3  hover:bg-white/10 transition-all duration-300 ${poppins.className}`}
+                      >
+                        <FiBookmark className="w-5 h-5 transition-transform group-hover:rotate-12" />
+                        <span>Saved </span>
+                      </button>
+                      <button
+                        onClick={handleLogout}
+                        className={`flex items-center space-x-4 w-full p-3 text-red-500 hover:bg-white/10 transition-all duration-300 ${poppins.className}`}
+                      >
+                        <BiLogOut className="w-5 h-5 transition-transform group-hover:rotate-12" />
+                        <span>Log out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mt-20">
-            {posts.map((post: any) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        </div>
+            <div className="fixed top-0 left-0 right-0 z-10 bg-[#1e1e24]/80 backdrop-blur-sm border-b border-white/10">
+              <div className=" mx-auto px-4 h-16 flex items-center justify-end">
+                <h1 className={`pt-4 text-[26px] hidden lg:block ${poppins.className} fixed left-8 top-0`}>
+                  Whispr <span className="text-[10px] text-primary">1.0v</span>
+                </h1>
+                <div className="relative  lg:-mr-2 lg:w-[19%] w-[100%] ">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <FaSearch className="w-4 h-4 text-gray-400" />
+                  </div>
+                  <input
+                    className={`w-full text-white ${poppins.className} p-2.5 pl-10 focus:pl-11 bg-white/5 border border-white/10 rounded-3xl
+                           focus:outline-none outline-none focus:border-white/20 transition-all duration-300 ease-in-out placeholder-gray-500 text-sm`}
+                    placeholder="Search posts, people, or tags"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
 
+            <div className="mx-auto md:ml-64 sm:ml-10 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mt-20">
+              {posts.map((post: any) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+          </>
+        {/* )} */}
         {/* Right Sidebar */}
-        <div className="  w-80 fixed hidden xl:block right-20 top-0 h-screen p-6 border-l border-white/10">
-          <div className="mb-8">
+        <div className="  xl:w-72  fixed hidden 2xl:block right-20 top-16 h-screen p-6 border-l border-white/10">
+          <div className="mb-8 mt-2">
             <h3 className="font-semibold mb-4 text-white/70">Suggested for you</h3>
             {suggestedUsers.map((user) => (
               <div key={user.id} className="flex  items-center justify-between mb-4">
