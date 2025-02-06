@@ -49,7 +49,7 @@ export default function Navbar() {
     
       </div>
         <button 
-          className="bg-primary text-white shadow-sm font-bold px-4 py-2 rounded-md hover:bg-primary transition-colors mr-3 w-[100px]"
+          className="bg-primary text-white shadow-sm  font-bold px-4 py-2 rounded-md hover:bg-primary transition-colors mr-3 w-[100px]"
           onClick={() => setAuthOpen(true)}
         >
           <span className={poppins.className}>{isSignUp ? 'Sign Up' : 'Sign In'}</span>
