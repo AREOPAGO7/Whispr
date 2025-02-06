@@ -61,6 +61,18 @@ export const useAuth = () => {
     }
   }, [router]);
 
+  const resetPassword = useCallback(async (email: string) => {
+    setLoading(true);
+    setError('');
+    try {
+      const message = await AuthService.resetPassword(email); // Set success message as error to display it
+    } catch (err: any) {
+      setError(AuthService.getErrorMessage(err)); // Use the getErrorMessage method for specific error handling
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   return {
     user,
     loading,
@@ -69,6 +81,7 @@ export const useAuth = () => {
     signup,
     logout,
     googleSignIn, // Ensure this is included in the return object
+    resetPassword, // Added resetPassword to the return object
     setError
   };
 }; 

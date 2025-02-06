@@ -6,7 +6,9 @@ import { AiFillHome } from "react-icons/ai";
 import { CgDetailsMore } from "react-icons/cg";
 import { IoMdSettings } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
-import PostCard from "@/app/components/explore/PostCard";
+import { FaRegImage } from "react-icons/fa6";
+import { IoDocumentText } from "react-icons/io5";import PostCard from "@/app/components/explore/PostCard";
+import { BsFillCameraReelsFill } from "react-icons/bs";
 import { Poppins } from 'next/font/google';
 import { useState,useRef,useEffect } from 'react';
 const poppins = Poppins({
@@ -241,7 +243,49 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="mx-auto md:ml-64 sm:ml-10 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mt-20">
+          <div className="mx-auto md:ml-64 sm:ml-10 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 mt-14">
+            {/* Suggested Section */}
+            <div className="border- p-4 lg:max-w-[70%] md:max-w-[90%]  max-w-[100%] mx-auto rounded-xl  w-full border-[1px] border-white/5">
+              <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center space-x-4 w-full ">
+                  <img
+                    src="https://github.com/shadcn.png" // Replace with the actual avatar URL
+                    alt="Ayu Shahirah Salem"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
+                  <div className='w-[100%]'>
+                  <input
+                  className={`w-[100%] text-white ${poppins.className}  p-3 pl-4 focus:pl-6 bg-white/5 border border-white/10 rounded-3xl
+                         focus:outline-none outline-none focus:border-white/20 transition-all duration-300 ease-in-out placeholder-gray-300 text-sm`}
+                  placeholder="Start a post"
+                  type="text"
+                />
+                  </div>
+                </div>
+                
+              </div>
+              <div className={`flex justify-around mt-4 p-1 rounded-lg ${poppins.className} text-sm cursor-pointer`}>
+                <div className='flex gap-2'>
+                  <FaRegImage  className='text-blue-400 text-xl'/> 
+                  <button className="text-white ">Media</button>
+                </div>
+                <div className='flex gap-2'>
+                  <IoDocumentText  className='text-red-400 text-xl'/> 
+                  <button className="text-white ">Article</button>
+                </div>
+                <div className='flex gap-2'>
+                  <BsFillCameraReelsFill  className='text-green-400 text-lg mr-1'/> 
+                  <button className="text-white ">Video</button>
+                </div>
+                
+
+
+                
+              </div>
+            </div>
+
             {posts.map((post: any) => (
               <PostCard key={post.id} post={post} />
             ))}
@@ -249,7 +293,7 @@ export default function Dashboard() {
         </>
       {/* )} */}
       {/* Right Sidebar */}
-      <div className="  xl:w-72  fixed hidden 2xl:block right-20 top-16 h-screen p-6 border-l border-white/10">
+      <div className="  xl:w-96  fixed hidden 2xl:block right-20 top-16 h-screen p-6 border-l border-white/10">
         <div className="mb-8 mt-2">
           <h3 className="font-semibold mb-4 text-white/70">Suggested for you</h3>
           {suggestedUsers.map((user) => (

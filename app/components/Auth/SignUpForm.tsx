@@ -4,6 +4,8 @@ import { useAuth } from '../../hooks/useAuth';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 import AuthPopup from '../Auth/AuthPopup';
+import { FaRegEye } from "react-icons/fa6";
+import { LuEyeClosed } from "react-icons/lu";
 
 
 
@@ -21,6 +23,7 @@ const SignUpForm = ({ toggleAuth }: SignInProps) => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const { loading, error, signup,googleSignIn } = useAuth();
+  const [isShowPass, setIsShowPass] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,7 +83,7 @@ const SignUpForm = ({ toggleAuth }: SignInProps) => {
             Name
           </label>
           <input
-            className="w-full px-4 py-3 border text-black text-sm border-gray-300 rounded-lg focus:outline-none  focus:border-gray-400  "
+            className={`w-full px-4 text-sm py-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 ${poppins.className}`}
             id="name"
             type="text"
             placeholder="Enter your name"
@@ -95,7 +98,7 @@ const SignUpForm = ({ toggleAuth }: SignInProps) => {
             Email address
           </label>
           <input
-            className="w-full px-4 py-3 border text-black text-sm border-gray-300 rounded-lg focus:outline-none focus:border-gray-400 "
+            className={`w-full px-4 text-sm py-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 ${poppins.className}`}
             id="email"
             type="email"
             placeholder="example@gmail.com"
@@ -111,9 +114,9 @@ const SignUpForm = ({ toggleAuth }: SignInProps) => {
           </label>
           <div className="relative">
             <input
-              className="w-full px-4 text-black py-3 border text-sm border-gray-300 rounded-lg focus:outline-none focus:border-gray-400 "
+              className={`w-full px-4 text-sm py-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 ${poppins.className}`}
               id="password"
-              type="password"
+              type={isShowPass ?  'text'  : "password"}
               placeholder="**************"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -121,28 +124,15 @@ const SignUpForm = ({ toggleAuth }: SignInProps) => {
               minLength={6}
             />
             <button
+              onClick={()=> setIsShowPass(!isShowPass)}
               type="button"
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                />
-              </svg>
+              {
+                isShowPass ?  <FaRegEye /> : <LuEyeClosed />
+              }
+             
+              
             </button>
           </div>
           <p className="text-xs text-gray-500">
@@ -151,7 +141,7 @@ const SignUpForm = ({ toggleAuth }: SignInProps) => {
         </div>
 
         <button
-          className="w-full bg-black text-white rounded-lg py-2 font-medium hover:bg-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400"
+          className={`w-full text-sm bg-black text-white rounded-lg py-2 font-medium hover:bg-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 ${poppins.className}`}
           type="submit"
           disabled={loading}
         >
