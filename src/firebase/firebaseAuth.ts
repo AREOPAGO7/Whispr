@@ -70,10 +70,8 @@ export const signInWithGoogle = async () => {
     if (error instanceof FirebaseError) {
       const message = getFriendlyErrorMessage(error.code);
       toast.error(`Google sign-in failed: ${message}`);
-      throw new FirebaseError(error.code, error.message);
     } else {
       toast.error('An unknown error occurred during Google sign in.');
-      throw new Error("An unknown error occurred during Google sign in.");
     }
   }
 };
