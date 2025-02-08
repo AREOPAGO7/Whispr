@@ -20,7 +20,7 @@ const LoginForm = ({ toggleAuth }: SignInProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const { loading, error, login ,googleSignIn } = useAuth();
+  const { loading, error, login , googleSignIn ,githubSignIn } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShowPass, setIsShowPass] = useState(false);
 
@@ -37,6 +37,7 @@ const LoginForm = ({ toggleAuth }: SignInProps) => {
 
         <div className="flex space-x-2 w-full">
           <button
+           onClick={githubSignIn}
             type="button"
             className="flex items-center justify-center w-full space-x-4 border border-gray-300 rounded-lg shadow-sm py-2 px-4 hover:bg-gray-50"
           >

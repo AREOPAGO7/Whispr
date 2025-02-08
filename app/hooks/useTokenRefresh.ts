@@ -16,7 +16,7 @@ export const useTokenRefresh = () => {
     } catch (error) {
       console.error('Error refreshing token:', error);
       // Handle token refresh error (e.g., redirect to login)
-      window.location.href = '/login';
+      window.location.href = '/';
     }
   }, []);
 

@@ -27,8 +27,9 @@ export const useAuth = () => {
     setLoading(true);
     setError('');
     try {
-      await AuthService.signup(email, password, name);
+      const uid = await AuthService.signup(email, password, name);
       router.push('/explore');
+      return uid;
     } catch (err: any) {
       setError(AuthService.getErrorMessage(err));
     } finally {
@@ -48,6 +49,22 @@ export const useAuth = () => {
       setLoading(false);
     }
   }, [router]);
+
+
+
+  const githubSignIn = useCallback(async () => {
+    setLoading(true);
+    setError('');
+    try {
+      await AuthService.githubSignIn(); // Call the new GitHub sign-in method
+      router.push('/explore');
+    } catch (err: any) {
+      setError(AuthService.getErrorMessage(err));
+    } finally {
+      setLoading(false);
+    }
+  }, [router]);
+
 
   const logout = useCallback(async () => {
     setLoading(true);
@@ -80,7 +97,8 @@ export const useAuth = () => {
     login,
     signup,
     logout,
-    googleSignIn, // Ensure this is included in the return object
+    googleSignIn,
+    githubSignIn, // Ensure this is included in the return object
     resetPassword, // Added resetPassword to the return object
     setError
   };

@@ -6,6 +6,7 @@ import { Poppins } from 'next/font/google';
 import AuthPopup from '../Auth/AuthPopup';
 import { FaRegEye } from "react-icons/fa6";
 import { LuEyeClosed } from "react-icons/lu";
+import { createUserInFirestore } from '@/app/services/UserServiceFirebase';
 
 
 
@@ -22,13 +23,28 @@ const SignUpForm = ({ toggleAuth }: SignInProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const { loading, error, signup,googleSignIn } = useAuth();
+  const { loading, error, signup,googleSignIn,githubSignIn } = useAuth();
   const [isShowPass, setIsShowPass] = useState(false);
-
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signup(email, password, name);
+  
+    const userId = await signup(email, password, name);
+  
+    if (userId) {
+      console.log("User ID:", userId);
+      await createUserInFirestore(
+        userId,
+        name || "Anonymous",
+        email,
+        "https://example.com/path/to/profile-picture.jpg",
+        "Lover of tech and coffee."
+      );
+    } else {
+      console.error("Signup failed, no valid userId returned.");
+    }
   };
+  
 
   return (
     <div className="">
@@ -38,6 +54,7 @@ const SignUpForm = ({ toggleAuth }: SignInProps) => {
      
         <div className="flex space-x-2 w-full">
           <button
+          onClick={githubSignIn}
             type="button"
             className="flex items-center justify-center w-full space-x-4 border border-gray-300 rounded-lg shadow-sm py-2 px-4 hover:bg-gray-50"
           >

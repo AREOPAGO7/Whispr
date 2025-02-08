@@ -1,4 +1,5 @@
 import { AuthProvider } from './contexts/AuthContext';
+import { UserProvider } from './contexts/UserContext';
 import './globals.css';
 
 export default function RootLayout({
@@ -12,9 +13,11 @@ export default function RootLayout({
         <title>Whispr</title>
       </head>
       <body>
+      <UserProvider>
         <AuthProvider>
           {children}
         </AuthProvider>
+       </UserProvider>
       </body>
     </html>
   );

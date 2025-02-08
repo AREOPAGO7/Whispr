@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '../firebase/config';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/config';  // Import auth from config
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { useTokenRefresh } from '../hooks/useTokenRefresh';
 
 interface AuthContextType {
@@ -24,15 +24,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const token = await user.getIdToken();
-        document.cookie = `auth-token=${token}; path=/; max-age=3600; SameSite=Strict; Secure`;
+        // Automatically update the user state when the authentication state changes
+        setUser(user);
       } else {
-        document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        setUser(null);
       }
-      setUser(user);
       setLoading(false);
     });
-
+  
     return () => unsubscribe();
   }, []);
 

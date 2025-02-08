@@ -8,11 +8,25 @@ import {
   sendPasswordResetEmail
 } from 'firebase/auth';
 
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup ,GithubAuthProvider} from 'firebase/auth';
 
 export class AuthService {
+  static getUser(uid: string) {
+    throw new Error('Method not implemented.');
+  }
   static async googleSignIn() {
     const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const token = await result.user.getIdToken();
+      this.setAuthToken(token);
+      return result.user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async githubSignIn() {
+    const provider = new GithubAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
       const token = await result.user.getIdToken();
@@ -36,16 +50,25 @@ export class AuthService {
   static async signup(email: string, password: string, name?: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  
       if (name) {
         await updateProfile(userCredential.user, { displayName: name });
       }
+  
+      const uid = userCredential.user.uid;
+  
+      // Reload user after signup to ensure we get the updated user data
+      await userCredential.user.reload();
+  
       const token = await userCredential.user.getIdToken();
       this.setAuthToken(token);
-      return userCredential.user;
+  
+      return uid;  // Return the user ID after reload
     } catch (error) {
       throw error;
     }
   }
+  
 
   static async logout() {
     try {

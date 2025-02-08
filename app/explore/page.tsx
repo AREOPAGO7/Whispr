@@ -1,5 +1,8 @@
 'use client';
 import { useAuth } from '../hooks/useAuth';
+import { useUser } from "../contexts/UserContext";
+import { UserProvider } from "../contexts/UserContext";
+
 import { FiCompass, FiBell, FiMessageSquare, FiPlusSquare, FiHeart, FiMessageCircle, FiShare2, FiBookmark } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
@@ -18,9 +21,11 @@ const poppins = Poppins({
 
 
 export default function Dashboard() {
-  const { user, loading, logout } = useAuth();
+  const { loading, logout } = useAuth();
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { user } = useUser();
+
 
 
   useEffect(() => {
@@ -122,17 +127,7 @@ export default function Dashboard() {
   ];
 
   return (
-    // <div className="p-8">
-     
-    //   <p>Welcome, {user.email}</p>
-    //   <button
-    //     onClick={logout}
-    //     className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-    //   >
-    //     Logout
-    //   </button>
-      
-    // </div>
+  
 
     <div className='min-h-screen text-white bg-[#1e1e24]'> {/* Added bg-[#2E282A] */}
 
@@ -153,7 +148,8 @@ export default function Dashboard() {
                   className="rounded-full object-cover"
                 />
                 <div>
-                  <h3 className="font-semibold">{user.email ? user.email.split('@')[0] : 'Guest'}</h3>
+                  <h3 className="font-semibold">{user.username}</h3>
+                  <p className='text-[12px] text-white/70'>{user.bio}</p>
                   <p className="text-sm text-gray-500">@areopago</p>
                 </div>
               </div>
