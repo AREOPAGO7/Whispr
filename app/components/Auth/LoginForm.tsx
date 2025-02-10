@@ -102,7 +102,7 @@ const LoginForm = ({ toggleAuth }: SignInProps) => {
               className={`w-full px-4 text-sm py-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 ${poppins.className}`}
               id="password"
               type={isShowPass ?  'text'  : "password"}
-              placeholder="password"
+              placeholder={isShowPass ?  "password"  : '***********'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

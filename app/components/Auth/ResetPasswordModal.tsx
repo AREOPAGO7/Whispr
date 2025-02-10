@@ -49,9 +49,9 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({ isOpen, onClose
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="border rounded-lg p-2 w-full mb-4"
+            className={`border text-black rounded-lg p-2 w-full mb-4 text-[13px] outline-none ${poppins.className}`}
           />
-          <button type="submit" className={`bg-black text-sm hover:bg-primary text-white rounded-lg py-2 w-full transition-colors duration-300 ${poppins.className}`}>
+          <button type="submit" className={`bg-black text-[13px] hover:bg-primary text-white rounded-lg py-2 w-full transition-colors duration-300 ${poppins.className}`}>
             Send Reset Link
           </button>
         </form>
