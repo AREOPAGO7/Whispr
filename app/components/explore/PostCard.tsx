@@ -43,7 +43,7 @@ const formatTimestamp = (timestamp: string) => {
 
 const PostCard: React.FC<{ post: Post }> = ({ post }) => {
   return (
-    <div className="mx-auto lg:max-w-[70%] md:max-w-[90%] max-w-[100%] p- shadow-sm overflow-hidden border-[1px] border-white/5">
+    <div className="mx-auto lg:max-w-[70%] md:max-w-[90%] max-w-[100%] rounded-lg shadow-sm overflow-hidden border-[1px] border-white/5">
       <div className="p-4 flex items-center space-x-3 mr-">
         <Image
           src={post.user.avatar}

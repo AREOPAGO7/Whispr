@@ -119,7 +119,7 @@ const CreatePostPopup: React.FC<CreatePostPopupProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-[#1c1c1c] rounded-xl p-4 lg:w-1/3 w-5/6 mb-56 lg:mr-16">
+      <div className="bg-[#1c1c1c] rounded-xl p-4 lg:w-1/3 w-5/6 mb- lg:mr-16">
         <h2 className="text-lg font-semibold mb-2 text-center">Create Post</h2>
         <div className="flex items-center mb-2">
           <img
